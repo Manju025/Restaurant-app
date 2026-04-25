@@ -97,6 +97,9 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+  .header-btn {
+    display: block;
+  }
   .tabs {
     overflow-x: scroll;
     gap: 26px;
