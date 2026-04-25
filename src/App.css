@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.body {
+  width: 100%;
+  height: 100vh;
+}
+
+.header {
+  background-color: rgb(255, 255, 255);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-title {
+  content: black;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.header-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgb(85, 85, 85);
+  font-weight: 700;
+  font-size: 16px;
+  display: none;
+}
+
+.i-counter {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  background-color: rgb(255, 89, 47);
+  padding: 1px 6px;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+.header-icon {
+  font-size: 29px;
+  cursor: pointer;
+  color: rgb(85, 85, 85);
+  font-weight: 700;
+}
+
+.tabs {
+  background-color: white;
+  border-top: 2px solid rgb(155, 155, 155);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 2px solid rgb(155, 155, 155);
+  width: 100%;
+}
+
+.tabs-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.active-tabs-btn {
+  border-bottom: 2px solid red;
+  color: red;
+}
+
+.cards-container {
+  background-color: white;
+  padding: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .tabs {
+    overflow-x: scroll;
+    gap: 26px;
+  }
+
+  .tabs-btn {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+}
