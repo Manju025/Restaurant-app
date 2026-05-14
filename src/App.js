@@ -1,63 +1,100 @@
 import {useState, useEffect} from 'react'
-import {AiOutlineShoppingCart} from 'react-icons/ai'
-import Card from './components/Card'
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
+import Login from './components/Login'
+import Home from './components/Home'
+import Cart from './components/Cart'
+import AppContext from './context/AppContext'
 import './App.css'
 
 const App = () => {
+  const [restaurantName, setRestaurantName] = useState('')
   const [menus, setMenus] = useState([])
-  const [d, setD] = useState([])
-  const [activeTab, setActiveTab] = useState(0)
-  const [cartCount, setCartCount] = useState(0)
+  const [cartList, setCartList] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
         'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details',
       )
+
       const data = await response.json()
+
       setMenus(data[0].table_menu_list)
-      setD(data[0])
+      setRestaurantName(data[0].restaurant_name)
+      console.log(cartList)
     }
+
     fetchData()
-  }, [])
+  }, [cartList])
+
+  const addCartItem = item => {
+    const existingItem = cartList.find(each => each.dish_id === item.dish_id)
+
+    if (existingItem) {
+      setCartList(
+        cartList.map(each =>
+          each.dish_id === item.dish_id
+            ? {...each, quantity: each.quantity + 1}
+            : each,
+        ),
+      )
+    } else {
+      setCartList([...cartList, {...item, quantity: 1}])
+    }
+  }
+
+  const removeCartItem = id => {
+    setCartList(cartList.filter(each => each.dish_id !== id))
+  }
+
+  const incrementCartItemQuantity = id => {
+    setCartList(
+      cartList.map(each =>
+        each.dish_id === id ? {...each, quantity: each.quantity + 1} : each,
+      ),
+    )
+  }
+
+  const decrementCartItemQuantity = id => {
+    const item = cartList.find(each => each.dish_id === id)
+
+    if (item.quantity === 1) {
+      removeCartItem(id)
+    } else {
+      setCartList(
+        cartList.map(each =>
+          each.dish_id === id ? {...each, quantity: each.quantity - 1} : each,
+        ),
+      )
+    }
+  }
+
+  const removeAllCartItems = () => {
+    setCartList([])
+  }
 
   return (
-    <div className="body">
-      <div className="header">
-        <h1 className="header-title">{d.restaurant_name}</h1>
-        <div className="header-right">
-          <button className="header-btn" type="button">
-            My Orders
-          </button>
-          <div className="header-icon">
-            <p className="i-counter">{cartCount}</p>
-            <AiOutlineShoppingCart className="header-icon" />
-          </div>
-        </div>
-      </div>
-      <div className="tabs">
-        {menus.map((each, index) => (
-          <button
-            key={each.menu_category_id}
-            className={
-              index === activeTab ? 'active-tabs-btn tabs-btn' : 'tabs-btn'
-            }
-            onClick={() => setActiveTab(index)}
-            type="button"
-          >
-            {each.menu_category}
-          </button>
-        ))}
-      </div>
-      <div className="cards-container">
-        {menus.length > 0 && (
-          <Card
-            dishes={menus[activeTab].category_dishes}
-            setCartCount={setCartCount}
-          />
-        )}
-      </div>
-    </div>
+    <AppContext.Provider
+      value={{
+        restaurantName,
+        menus,
+        cartList,
+        addCartItem,
+        removeCartItem,
+        incrementCartItemQuantity,
+        decrementCartItemQuantity,
+        removeAllCartItems,
+      }}
+    >
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <ProtectedRoute exact path="/" component={Home} />
+          <ProtectedRoute path="/cart" component={Cart} />
+        </Switch>
+      </BrowserRouter>
+    </AppContext.Provider>
   )
 }
 

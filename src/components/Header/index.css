@@ -1,0 +1,53 @@
+.header {
+  background-color: rgb(255, 255, 255);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-title {
+  color: #d35400;
+  font-weight: 700;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.header-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgb(85, 85, 85);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.i-counter {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  background-color: rgb(255, 89, 47);
+  padding: 1px 6px;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+.header-icon {
+  font-size: 29px;
+  cursor: pointer;
+  color: rgb(85, 85, 85);
+  font-weight: 700;
+}
+
+.cart-btn {
+  border: none;
+  background-color: transparent;
+}
